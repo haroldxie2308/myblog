@@ -1,0 +1,72 @@
+create table blog (
+	blog_id int auto_increment primary key,
+	author_id int,
+	title varchar(50),
+	tags_id json,
+	category_id int,
+	createdTime datetime,
+	lastEditedTime datetime,
+	readingTime int,
+	content text,
+	pictures_id int
+);
+
+create table user (
+	user_id int AUTO_INCREMENT PRIMARY KEY,
+	realName varchar(20),
+	nickname varchar(20) unique,
+	avatar_id int,
+	gender int,
+	birthday date,
+	emailAddr varchar(100),
+	personalStatement text,
+	blogs_id json,
+	accountCreationDate date
+);
+
+create table tag (
+	tag_id int AUTO_INCREMENT PRIMARY KEY,
+	tagName varchar(20) unique
+);
+
+create table category (
+	`category_id` int AUTO_INCREMENT PRIMARY KEY,
+	categoryName varchar(50) unique
+);
+
+alter table blog 
+add foreign key(author_id)
+references user(user_id)
+on delete set null;
+
+alter table blog 
+add foreign key(`category_id`)
+references category(category_id)
+on delete set null;
+
+create table pics(
+	picture_id int auto_increment primary key,
+	picture mediumblob
+);
+
+ALTER TABLE `blog` CHANGE `picture_id` `picPath` VARCHAR(100)
+DEFAULT NULL;
+
+ALTER TABLE `blog` CHANGE `tags_id` `tags_id` VARCHAR(20)
+CHARACTER SET utf8mb4
+BINARY
+NULL
+DEFAULT NULL;
+
+ALTER TABLE `user` CHANGE `blogs_id` `blogs_id` VARCHAR(100)
+CHARACTER SET utf8mb4
+BINARY
+NULL
+DEFAULT NULL;
+
+ALTER TABLE `user` CHANGE `avatar_id` `avatar_id` VARCHAR(100)
+NULL
+DEFAULT NULL;
+
+
+
